@@ -17,6 +17,7 @@ export class UserEntity {
   @IsString()
   username: string;
 
+  // Bad practice, never store the password as plain text.
   @Column()
   @IsString()
   password: string;

@@ -7,6 +7,7 @@ import { TaskEntity } from 'src/models/task/task.entity';
 import { TaskModule } from 'src/models/task/task.module';
 import { UserEntity } from 'src/models/user/user.entity';
 import { UserModule } from 'src/models/user/user.module';
+import { AuthModule } from 'src/utils/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -29,6 +30,7 @@ import { AppService } from './app.service';
     BoardModule,
     TaskModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
