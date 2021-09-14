@@ -8,6 +8,7 @@ services:
       - MYSQL_USERNAME=root
       - MYSQL_PASSWORD=asd123.
       - MYSQL_DATABASE=test
+      - SECRET=ljgiksdjhvbe.1A#
     depends_on: [ db ]
     ports:
       - "3000:3000"
