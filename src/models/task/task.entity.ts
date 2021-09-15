@@ -1,7 +1,13 @@
 import { IsBoolean, IsNumber, IsString } from 'class-validator';
 import { Status } from 'src/enums/status';
 import { BoardEntity } from 'src/models/board/board.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('tasks')
 export class TaskEntity {
@@ -20,7 +26,9 @@ export class TaskEntity {
   @IsNumber()
   scrumPunctuation: number;
 
-  @Column()
+  @Column({
+    default: false,
+  })
   @IsBoolean()
   isArchived: boolean;
 
@@ -31,6 +39,12 @@ export class TaskEntity {
   })
   status: Status;
 
+  @Column({
+    name: 'board_id',
+  })
+  boardId: number;
+
   @ManyToOne(() => BoardEntity, (board) => board.tasks)
+  @JoinColumn({ name: 'board_id' })
   board: BoardEntity;
 }
