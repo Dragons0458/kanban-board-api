@@ -31,6 +31,7 @@ import { AppService } from './app.service';
     TaskModule,
     UserModule,
     AuthModule,
+    TypeOrmModule.forFeature([BoardEntity, UserEntity]),
   ],
   controllers: [AppController],
   providers: [AppService],

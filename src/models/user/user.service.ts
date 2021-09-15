@@ -1,35 +1,15 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginInput } from 'src/inputs/login.input';
 import { UserEntity } from 'src/models/user/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class UserService implements OnModuleInit {
+export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userEntityRepository: Repository<UserEntity>,
   ) {}
-
-  async onModuleInit() {
-    const [dbUser, dbUser2] = await this.userEntityRepository.find();
-
-    if (!dbUser) {
-      const userEntity = this.userEntityRepository.create({
-        username: 'hello',
-        password: 'world',
-      });
-      await this.userEntityRepository.save(userEntity);
-    }
-
-    if (!dbUser2) {
-      const userEntity = this.userEntityRepository.create({
-        username: 'hello2',
-        password: 'world2',
-      });
-      await this.userEntityRepository.save(userEntity);
-    }
-  }
 
   async findOneByLoginInput(
     loginInput: LoginInput,
@@ -40,5 +20,16 @@ export class UserService implements OnModuleInit {
         password: loginInput.password,
       },
     });
+  }
+
+  async userHasPermission(userId: number, boardId: number): Promise<boolean> {
+    const user = await this.userEntityRepository.findOne({
+      relations: ['boards'],
+      where: {
+        id: userId,
+      },
+    });
+
+    return user?.boards?.some((board) => board.id === boardId) || false;
   }
 }

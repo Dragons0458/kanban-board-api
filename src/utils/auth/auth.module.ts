@@ -17,7 +17,7 @@ import { AuthController } from './auth.controller';
       imports: [ConfigModule.forRoot()],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('secret'),
-        signOptions: { expiresIn: '300s' },
+        signOptions: { expiresIn: '30000000s' },
       }),
       inject: [ConfigService],
     }),
